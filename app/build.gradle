@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'hexlet.code'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+compileJava {
+    options.release = 17
+}
+application {
+    mainClass = 'hexlet.code.App'
+}
+dependencies {
+    implementation(
+            'info.picocli:picocli:4.7.1',
+            'com.fasterxml.jackson.core:jackson-databind:2.14.2',
+            'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14'
+    )
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+}
+
+test {
+    useJUnitPlatform()
+}
