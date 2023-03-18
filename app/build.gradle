@@ -1,6 +1,11 @@
 plugins {
     id 'java'
     id 'application'
+    id 'checkstyle'
+    id 'jacoco'
+}
+application {
+    mainClass = 'hexlet.code.App'
 }
 
 group 'hexlet.code'
@@ -12,9 +17,7 @@ repositories {
 compileJava {
     options.release = 17
 }
-application {
-    mainClass = 'hexlet.code.App'
-}
+
 dependencies {
     implementation(
             'info.picocli:picocli:4.7.1',
