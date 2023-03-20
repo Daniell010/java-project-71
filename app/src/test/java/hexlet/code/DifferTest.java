@@ -27,5 +27,8 @@ public class DifferTest {
         }
         assertEquals(butWas, stringBuilder.toString());
     }
+    public void diffYml() throws Exception {
+
+    }
 
 }

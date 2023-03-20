@@ -1,0 +1,12 @@
+.gradle
+
+# Ignore Gradle build output directory
+build
+
+**/logs/
+
+.settings
+bin
+.project*
+.classpath
+.idea/

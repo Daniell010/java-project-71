@@ -1,48 +1,30 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static java.nio.file.Files.readString; //Метод для чтения всех символов из файла в строку.
-
+import static hexlet.code.Parser.fileToMap;
 public class Differ {
-    public static boolean differ(Map<String, Object> file1, Map<String, Object> file2, String key) throws Exception {
+    public static boolean differ(Map<String, Object> file1, Map<String, Object> file2, String key) {
         Object obj1 = file1.get(key);
         Object obj2 = file2.get(key);
         return (obj1 == null || obj2 == null ? obj1 != obj2 : !obj1.equals(obj2));
     }
+
     public static String generate(String filePath1, String filePath2, String format) throws Exception {
 
-        Path file1 = Paths.get(filePath1).toAbsolutePath().normalize(); // Формируем абсолютный путь
-        Path file2 = Paths.get(filePath2).toAbsolutePath().normalize();
 
-        if (!Files.exists(file1)) { // Проверяем существование файлов
-            throw new Exception("File '" + file1 + "' does not exist");
-        } else if (!Files.exists(file2)) {
-            throw new Exception("File '" + file2 + "' does not exist");
-        }
+        Map<String, Object> map = fileToMap(filePath1);
+        Map<String, Object> map2 = fileToMap(filePath2);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        // readValue используется для преобразования (десериализации) JSON из строки, потока или файла в POJO.
-        Map<String, Object> map
-                = objectMapper.readValue(readString(file1), new TypeReference<Map<String, Object>>() { });
-        Map<String, Object> map2
-                = objectMapper.readValue(readString(file2), new TypeReference<Map<String, Object>>() { });
-
-        Map<String, Object> result = new LinkedHashMap<>();
         Set<String> keys = new TreeSet<>(map.keySet());
         keys.addAll(map2.keySet());
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{\n");
-
 
         for (String key : keys) {
             if (map.containsKey(key) && !map2.containsKey(key)) {
@@ -57,7 +39,39 @@ public class Differ {
             }
         }
         stringBuilder.append("}");
-
         return stringBuilder.toString();
     }
+
+    public static Path pathFile(String string) throws Exception { // Формируем абсолютный путь
+        Path path = Paths.get(string).toAbsolutePath().normalize();
+        if (!Files.exists(path)) {
+            throw new Exception("File '" + path + "' does not exist");
+        }
+        return path;
+    }
+
+//    public static Map<String, Object> fileToMap(String filePath) throws Exception {
+//        Path file = pathFile(filePath);
+//        Map<String, Object> map = null;
+//        if (filePath.endsWith(".json")) {
+//            map = jsonToMap(file);
+//        } else if (file.endsWith(".yml")) {
+//            map = ymlToMap(file);
+//        }
+//        return map;
+//    }
+
+//    private static Map<String, Object> jsonToMap(Path file) throws Exception {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        // readValue используется для преобразования (десериализации) JSON из строки, потока или файла в POJO.
+//        return objectMapper.readValue(readString(file), new TypeReference<Map<String, Object>>() {
+//        });
+//    }
+//
+//    private static Map<String, Object> ymlToMap(Path file) throws Exception {
+//        ObjectMapper objectMapper = new YAMLMapper();
+//        return objectMapper.readValue(readString(file), new TypeReference<Map<String, Object>>() {
+//        });
+//    }
+
 }
