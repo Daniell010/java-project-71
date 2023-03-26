@@ -1,11 +1,9 @@
-package formatters;
+package hexlet.code.formatters;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-
-import static formatters.Json.differ;
 
 public class Plain {
     public static String formatPlain(Map<String, Object> map, Map<String, Object> map2) {
@@ -25,7 +23,7 @@ public class Plain {
                         .append("' was added with value: ")
                         .append(getValue(map2.get(key)))
                         .append("\n");
-            } else if (differ(map, map2, key)) {
+            } else if (Stylish.differ(map, map2, key)) {
                 stringBuilder.append("Property '")
                         .append(key)
                         .append("' was updated. From ")
