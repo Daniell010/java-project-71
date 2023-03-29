@@ -1,42 +1,34 @@
 package hexlet.code.formatters;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Plain {
-    public static String formatPlain(Map<String, Object> map, Map<String, Object> map2) {
+    public static final String REMOVED_LINE_FORMAT = "Property '%s' was removed\n";
+    public static final String ADD_LINE_FORMAT = "Property '%s' was added with value: %s\n";
+    public static final String UPDATED_LINE_FORMAT = "Property '%s' was updated. From %s to %s\n";
 
-        Set<String> keys = new TreeSet<>(map.keySet());
-        keys.addAll(map2.keySet());
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String key : keys) {
-            if (map.containsKey(key) && !map2.containsKey(key)) { // есть в первой нет во второй
-                stringBuilder.append("Property '")
-                        .append(key)
-                        .append("' was removed")
-                        .append("\n");
-            } else if (!map.containsKey(key) && map2.containsKey(key)) { // нет в первой есть во второй
-                stringBuilder.append("Property '")
-                        .append(key)
-                        .append("' was added with value: ")
-                        .append(getValue(map2.get(key)))
-                        .append("\n");
-            } else if (Stylish.differ(map, map2, key)) {
-                stringBuilder.append("Property '")
-                        .append(key)
-                        .append("' was updated. From ")
-                        .append(getValue(map.get(key)))
-                        .append(" to ")
-                        .append(getValue(map2.get(key)))
-                        .append("\n");
-            }
+    public static String formatPlain(ArrayList<Map<String, Object>> diff) {
+
+
+        StringBuilder result = new StringBuilder();
+        for (Map<String, Object> diffLine : diff) {
+            var fieldStatus = (String) diffLine.get("STATUS");
+            var fieldName = (String) diffLine.get("FIELD");
+            var oldFieldValue = diffLine.get("OLD_VALUE");
+            var newFieldValue = diffLine.get("NEW_VALUE");
+            result.append(
+                switch (fieldStatus) {
+                    case "REMOVED" -> REMOVED_LINE_FORMAT.formatted(fieldName);
+                    case "ADDED" -> ADD_LINE_FORMAT.formatted(fieldName, getValue(newFieldValue));
+                    case "UPDATED" -> UPDATED_LINE_FORMAT.formatted(fieldName,
+                                getValue(oldFieldValue), getValue(newFieldValue));
+                    case "SAME" -> "";
+                    default -> ""; });
         }
-
-        return stringBuilder.toString().substring(0, stringBuilder.length() - 1);
+        return result.deleteCharAt(result.length() - 1).toString();
     }
-
     private static String getValue(Object obj) {
         if (obj instanceof String) {
             return "'" + obj + "'";

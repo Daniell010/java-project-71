@@ -1,33 +1,38 @@
 package hexlet.code.formatters;
 
+import java.util.ArrayList;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+
 
 public class Stylish {
+    public static final String REMOVED_LINE_FORMAT = "  - %s: %s\n";
+    public static final String ADD_LINE_FORMAT = "  + %s: %s\n";
+    public static final String SAME_LINE_FORMAT = "    %s: %s\n";
+    public static final String UPDATED_LINE_FORMAT = "  - %s: %s\n  + %s: %s\n";
+
     public static boolean differ(Map<String, Object> file1, Map<String, Object> file2, String key) {
         Object obj1 = file1.get(key);
         Object obj2 = file2.get(key);
         return (obj1 == null || obj2 == null ? obj1 != obj2 : !obj1.equals(obj2));
     }
-    public static String formatStylish(Map<String, Object> map, Map<String, Object> map2) {
-        Set<String> keys = new TreeSet<>(map.keySet());
-        keys.addAll(map2.keySet());
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("{\n");
-        for (String key : keys) {
-            if (map.containsKey(key) && !map2.containsKey(key)) {
-                stringBuilder.append("  - ").append(key).append(": ").append(map.get(key)).append("\n");
-            } else if (!map.containsKey(key) && map2.containsKey(key)) {
-                stringBuilder.append("  + ").append(key).append(": ").append(map2.get(key)).append("\n");
-            } else if (differ(map, map2, key)) {
-                stringBuilder.append("  - ").append(key).append(": ").append(map.get(key)).append("\n");
-                stringBuilder.append("  + ").append(key).append(": ").append(map2.get(key)).append("\n");
-            } else {
-                stringBuilder.append("    ").append(key).append(": ").append(map2.get(key)).append("\n");
-            }
+
+    public static String formatStylish(ArrayList<Map<String, Object>> result1) {
+        StringBuilder result = new StringBuilder("{\n");
+        for (Map<String, Object> diffLine : result1) {
+            var fieldStatus = (String) diffLine.get("STATUS");
+            var fieldName = (String) diffLine.get("FIELD");
+            var oldFieldValue = diffLine.get("OLD_VALUE");
+            var newFieldValue = diffLine.get("NEW_VALUE");
+            result.append(
+                switch (fieldStatus) {
+                    case "REMOVED" -> REMOVED_LINE_FORMAT.formatted(fieldName, oldFieldValue);
+                    case "ADDED" -> ADD_LINE_FORMAT.formatted(fieldName, newFieldValue);
+                    case "SAME" -> SAME_LINE_FORMAT.formatted(fieldName, oldFieldValue);
+                    case "UPDATED" ->
+                                UPDATED_LINE_FORMAT.formatted(fieldName, oldFieldValue, fieldName, newFieldValue);
+                    default -> ""; });
         }
-        stringBuilder.append("}");
-        return stringBuilder.toString();
+        return result.append("}").toString();
+
     }
 }

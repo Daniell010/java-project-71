@@ -11,7 +11,7 @@ import java.util.concurrent.Callable;
         description = "Compares two configuration files and shows a difference."
 )
 
-public class App implements Callable<String> {
+public final class  App implements Callable<String> {
     @CommandLine.Option(
             names = {"-f", "--format"},
             paramLabel = "format",
@@ -30,7 +30,7 @@ public class App implements Callable<String> {
             System.out.println(result);
             return result;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return null;
         }
     }

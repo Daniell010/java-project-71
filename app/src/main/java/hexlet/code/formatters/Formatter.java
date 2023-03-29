@@ -1,5 +1,7 @@
 package hexlet.code.formatters;
 
+import hexlet.code.DiffBuilder;
+
 import java.util.Map;
 
 public class Formatter {
@@ -7,9 +9,9 @@ public class Formatter {
             Object> map, Map<String, Object> map2) throws Exception {
 
         return switch (format) {
-            case "json" -> Json.formatJson(map, map2);
-            case "plain" -> Plain.formatPlain(map, map2);
-            case "stylish" -> Stylish.formatStylish(map, map2);
+            case "json" -> Json.formatJson(DiffBuilder.diffFormat(map, map2));
+            case "plain" -> Plain.formatPlain(DiffBuilder.diffFormat(map, map2));
+            case "stylish" -> Stylish.formatStylish(DiffBuilder.diffFormat(map, map2));
             default -> "Format error";
         };
     }
