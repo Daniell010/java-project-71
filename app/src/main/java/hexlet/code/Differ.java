@@ -5,6 +5,7 @@ import hexlet.code.formatters.Formatter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -15,7 +16,8 @@ public class Differ {
 
         Map<String, Object> map = fileToMap(filePath1);
         Map<String, Object> map2 = fileToMap(filePath2);
-        return Formatter.format(format, map, map2);
+        ArrayList<Map<String, Object>> result = DiffBuilder.diffFormat(map, map2);
+        return Formatter.format(format, result);
     }
 
     public static Map<String, Object> fileToMap(String filePath) throws Exception {
@@ -29,6 +31,7 @@ public class Differ {
         }
         return map;
     }
+
     public static String generate(String filePath1, String filePath2) throws Exception {
         return generate(filePath1, filePath2, DEFAULT_FORMAT);
     }
