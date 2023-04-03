@@ -1,7 +1,6 @@
 package hexlet.code.formatters;
 
 import java.util.Map;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Plain {
