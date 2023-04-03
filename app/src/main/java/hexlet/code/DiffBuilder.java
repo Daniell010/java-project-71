@@ -1,13 +1,9 @@
 package hexlet.code;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeSet;
-import java.util.Objects;
+import java.util.*;
 
 public class DiffBuilder {
-    public static ArrayList<Map<String, Object>> diffFormat(Map<String,
+    public static List<Map<String, Object>> buildDifference(Map<String,
             Object> map1, Map<String, Object> map2) {
         var result = new ArrayList<Map<String, Object>>();
 

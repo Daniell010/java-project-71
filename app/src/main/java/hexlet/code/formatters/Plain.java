@@ -9,7 +9,7 @@ public class Plain {
     public static final String ADD_LINE_FORMAT = "Property '%s' was added with value: %s\n";
     public static final String UPDATED_LINE_FORMAT = "Property '%s' was updated. From %s to %s\n";
 
-    public static String formatPlain(ArrayList<Map<String, Object>> diff) {
+    public static String formatPlain(List<Map<String, Object>> diff) {
 
 
         StringBuilder result = new StringBuilder();

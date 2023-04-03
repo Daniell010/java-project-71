@@ -1,6 +1,7 @@
 package hexlet.code.formatters;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -16,7 +17,7 @@ public class Stylish {
         return (obj1 == null || obj2 == null ? obj1 != obj2 : !obj1.equals(obj2));
     }
 
-    public static String formatStylish(ArrayList<Map<String, Object>> result1) {
+    public static String formatStylish(List<Map<String, Object>> result1) {
         StringBuilder result = new StringBuilder("{\n");
         for (Map<String, Object> diffLine : result1) {
             var fieldStatus = (String) diffLine.get("STATUS");

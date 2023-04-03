@@ -1,10 +1,11 @@
 package hexlet.code.formatters;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Formatter {
-    public static String format(String format, ArrayList<Map<String, Object>> result) throws Exception {
+    public static String format(String format, List<Map<String, Object>> result) throws Exception {
 
         return switch (format) {
             case "json" -> Json.formatJson(result);

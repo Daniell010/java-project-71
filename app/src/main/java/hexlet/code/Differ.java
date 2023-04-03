@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -16,7 +17,7 @@ public class Differ {
 
         Map<String, Object> map = fileToMap(filePath1);
         Map<String, Object> map2 = fileToMap(filePath2);
-        ArrayList<Map<String, Object>> result = DiffBuilder.diffFormat(map, map2);
+        List<Map<String, Object>> result = DiffBuilder.buildDifference(map, map2);
         return Formatter.format(format, result);
     }
 
