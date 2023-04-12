@@ -1,5 +1,1 @@
-[{"STATUS":"REMOVED","FIELD":"follow","OLD_VALUE":false},
-{"STATUS":"SAME","FIELD":"host","OLD_VALUE":"hexlet.io"},
-{"STATUS":"REMOVED","FIELD":"proxy","OLD_VALUE":"123.234.53.22"},
-{"STATUS":"UPDATED","NEW_VALUE":20,"FIELD":"timeout","OLD_VALUE":50},
-{"STATUS":"ADDED","NEW_VALUE":true,"FIELD":"verbose"}]
+[{"STATUS":"REMOVED","FIELD":"follow","OLD_VALUE":false},{"STATUS":"SAME","FIELD":"host","OLD_VALUE":"hexlet.io"},{"STATUS":"REMOVED","FIELD":"proxy","OLD_VALUE":"123.234.53.22"},{"STATUS":"UPDATED","NEW_VALUE":20,"FIELD":"timeout","OLD_VALUE":50},{"STATUS":"ADDED","NEW_VALUE":true,"FIELD":"verbose"}]

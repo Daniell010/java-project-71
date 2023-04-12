@@ -21,7 +21,7 @@ public class Differ {
     }
 
     public static Map<String, Object> fileToMap(String filePath) throws Exception {
-        Path file = pathFile(filePath);
+        Path file = getPath(filePath);
         var content = Files.readString(file);
         Map<String, Object> map = null;
         if (filePath.endsWith(".json")) {
@@ -36,7 +36,7 @@ public class Differ {
         return generate(filePath1, filePath2, DEFAULT_FORMAT);
     }
 
-    public static Path pathFile(String string) throws Exception {
+    public static Path getPath(String string) throws Exception {
         Path path = Paths.get(string).toAbsolutePath().normalize();
         if (!Files.exists(path)) {
             throw new Exception("File '" + path + "' does not exist");
